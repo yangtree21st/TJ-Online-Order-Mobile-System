@@ -1,8 +1,10 @@
 package com.tjexpress.sell.dataobject;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class ProductCategory {
 
     @Id
@@ -14,6 +16,8 @@ public class ProductCategory {
 
     /** categoryType. */
     private Integer categoryType;
+
+    public ProductCategory(){}
 
     public ProductCategory(String categoryName, Integer categoryType) {
         this.categoryName = categoryName;
@@ -42,5 +46,14 @@ public class ProductCategory {
 
     public void setCategoryType(Integer categoryType) {
         this.categoryType = categoryType;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductCategory{" +
+                "categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
+                ", categoryType=" + categoryType +
+                '}';
     }
 }

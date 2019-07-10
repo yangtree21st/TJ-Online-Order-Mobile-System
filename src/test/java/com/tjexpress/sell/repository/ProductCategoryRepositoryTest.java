@@ -25,11 +25,10 @@ public class ProductCategoryRepositoryTest {
     }
 
     @Test
-    @Transactional
-    public void saveTest() {
-        ProductCategory productCategory = new ProductCategory("best male products", 4);
-        ProductCategory result = repository.save(productCategory);
-        Assert.assertNotNull(result);
-//        Assert.assertNotEquals(null, result);
+    public void saveTest(){
+        ProductCategory productCategory = repository.findOne(2);
+
     }
+
+
 }
