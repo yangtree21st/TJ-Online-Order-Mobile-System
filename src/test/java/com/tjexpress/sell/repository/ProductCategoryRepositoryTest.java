@@ -27,6 +27,11 @@ public class ProductCategoryRepositoryTest {
     @Test
     public void saveTest(){
         ProductCategory productCategory = repository.findOne(2);
+        productCategory.setCategoryName("male second-sell product");
+
+        productCategory.setCategoryType(3);
+        repository.save(productCategory);
+
 
     }
 

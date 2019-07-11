@@ -1,5 +1,6 @@
 package com.tjexpress.sell.dataobject;
 
+import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @DynamicUpdate
+@Data
 public class ProductCategory {
 
     @Id
@@ -22,6 +24,22 @@ public class ProductCategory {
     private Integer categoryType;
 
     private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     private Date updateTime;
 
