@@ -10,6 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -25,14 +28,23 @@ public class ProductCategoryRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void saveTest(){
-        ProductCategory productCategory = repository.findOne(2);
-        productCategory.setCategoryName("male second-sell product");
+        ProductCategory productCategory = new ProductCategory(" best male-product",5);
 
-        productCategory.setCategoryType(3);
-        repository.save(productCategory);
+        ProductCategory result = repository.save(productCategory);
+
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void findByCategoryTypeInTest (){
+        List<Integer>list = Arrays.asList(2,3,4);
 
 
+        List<ProductCategory> result = repository.findByCategoryTypeIn(list);
+
+        Assert.assertNotEquals(0,result.size());
     }
 
 
