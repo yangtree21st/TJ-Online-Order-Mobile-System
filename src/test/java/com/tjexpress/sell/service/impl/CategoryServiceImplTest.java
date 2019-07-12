@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,8 +43,9 @@ public class CategoryServiceImplTest {
     }
 
     @Test
+    @Transactional
     public void save() throws Exception {
-        ProductCategory productCategory = new ProductCategory(" test category",10);
+        ProductCategory productCategory = new ProductCategory(" test category",11);
         ProductCategory result = categoryServiceIml.save(productCategory);
         Assert.assertEquals(result,productCategory);
     }
