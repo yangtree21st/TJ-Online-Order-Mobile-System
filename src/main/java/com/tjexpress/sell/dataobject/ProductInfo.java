@@ -28,7 +28,7 @@ public class ProductInfo {
     /** productIcon. */
     private String productIcon;
 
-    /** productStatus, 0common 1 unshel. */
+    /** productStatus, 0common 1 unshelf. */
     private Integer productStatus;
 
     /** categoryType. */
