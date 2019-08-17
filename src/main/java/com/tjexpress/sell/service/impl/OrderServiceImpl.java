@@ -2,11 +2,14 @@ package com.tjexpress.sell.service.impl;
 
 import com.tjexpress.sell.ResultVOUtil.KeyUtil;
 import com.tjexpress.sell.dataobject.OrderDetail;
+import com.tjexpress.sell.dataobject.OrderMaster;
 import com.tjexpress.sell.dataobject.ProductInfo;
+import com.tjexpress.sell.dto.CartDTO;
 import com.tjexpress.sell.dto.OrderDTO;
 import com.tjexpress.sell.enums.ResultEnum;
 import com.tjexpress.sell.exception.SellException;
 import com.tjexpress.sell.repository.OrderDetailRepository;
+import com.tjexpress.sell.repository.OrderMasterRepository;
 import com.tjexpress.sell.service.OrderService;
 import com.tjexpress.sell.service.ProductService;
 import org.springframework.beans.BeanUtils;
@@ -15,8 +18,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -28,11 +34,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
      private OrderDetailRepository orderDetailRepository;
 
-
+    @Autowired
+    private OrderMasterRepository orderMasterRepository;
 
     BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
 
     @Override
+    @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
 
         String orderId = KeyUtil.genUniquekey();
@@ -54,18 +62,28 @@ public class OrderServiceImpl implements OrderService {
 
             orderDetail.setOrderId(orderId);
             orderDetail.setDetailId(KeyUtil.genUniquekey());
+            BeanUtils.copyProperties(productInfo,orderDetail);
 
             orderDetailRepository.save(orderDetail);
 
         }
 
 
-        //2.caculate the amount of the order
-        //3.input the information to the database(Ordermaster and OrderDetail)
+
+        //3.input the information to the database(Ordermaster)
+            OrderMaster orderMaster = new OrderMaster();
+            orderMaster.setOrderId(orderId);
+            orderMaster.setOrderAmount(orderAmount);
+            orderMasterRepository.save(orderMaster);
+
         //4.deduck the storage;
+            List<CartDTO> cartDTOlist = orderDTO.getOrderDetailList()
+                    .stream().map(e -> new CartDTO(e.getProductId(),e.getProductQuantity()))
+                    .collect(Collectors.toList());
+            productService.deduckStorage(cartDTOlist);
 
 
-        return null;
+        return orderDTO ;
     }
 
     @Override

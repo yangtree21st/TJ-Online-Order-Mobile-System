@@ -1,6 +1,8 @@
 package com.tjexpress.sell.service;
 
 import com.tjexpress.sell.dataobject.ProductInfo;
+import com.tjexpress.sell.dto.CartDTO;
+import com.tjexpress.sell.dto.OrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,8 +19,8 @@ public interface ProductService {
     ProductInfo save ( ProductInfo productInfo);
 
     // add inventory
-
+    void increaseStorage(List<CartDTO> cartDTOList);
 
     // minus inventory
-
+    void deduckStorage(List<CartDTO> cartDTOList);
 }

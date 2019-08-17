@@ -1,6 +1,7 @@
 package com.tjexpress.sell.service.impl;
 
 import com.tjexpress.sell.dataobject.ProductInfo;
+import com.tjexpress.sell.dto.CartDTO;
 import com.tjexpress.sell.enums.ProductStatusEnum;
 import com.tjexpress.sell.repository.ProductInfoRepository;
 import com.tjexpress.sell.service.ProductService;
@@ -35,5 +36,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
+    }
+
+    @Override
+    public void increaseStorage(List<CartDTO> cartDTOList) {
+
+    }
+
+    @Override
+    public void deduckStorage(List<CartDTO> cartDTOList) {
+
     }
 }
