@@ -1,22 +1,19 @@
-package com.tjexpress.sell.dataobject;
+package com.tjexpress.sell.dto;
 
 
+import com.tjexpress.sell.dataobject.OrderDetail;
 import com.tjexpress.sell.enums.OrderStatusEnum;
 import com.tjexpress.sell.enums.PayStatusEnum;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-@Entity
 @Data
-@DynamicUpdate
-public class OrderMaster {
+public class OrderDTO {
 
-    @Id
+
     private String orderId;
 
 
@@ -37,10 +34,10 @@ public class OrderMaster {
     private BigDecimal orderAmount;
 
     /** OrderStatusEnum, default 0 new order. */
-    private Integer orderStatus = OrderStatusEnum.NEW.getCode();
+    private Integer orderStatus ;
 
     /** PayStatusEnum, 0 not pay. */
-    private Integer payStatus = PayStatusEnum.WAIT.getCode();
+    private Integer payStatus ;
 
     /** createTime. */
     private Date createTime;
@@ -48,4 +45,5 @@ public class OrderMaster {
     /** updateTime. */
     private Date updateTime;
 
+    List<OrderDetail> orderDetailList ;
 }
