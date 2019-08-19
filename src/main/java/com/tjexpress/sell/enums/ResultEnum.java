@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum ResultEnum {
 
     PRODUCT_NOT_EXIST( 10, "The product do not exist!"),
-            ;
+    INVENTORY_NOT_ENOUGH (11,"The inventory is not enough")       ;
 
 
     private Integer code;
