@@ -1,5 +1,6 @@
 package com.tjexpress.sell.service.impl;
 
+import com.tjexpress.sell.Converter.ConvertOrderMasterToOrderDTO;
 import com.tjexpress.sell.ResultVOUtil.KeyUtil;
 import com.tjexpress.sell.dataobject.OrderDetail;
 import com.tjexpress.sell.dataobject.OrderMaster;
@@ -15,6 +16,7 @@ import com.tjexpress.sell.service.ProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -88,12 +90,28 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO findOne(String orderId) {
-        return null;
+        OrderMaster orderMaster =orderMasterRepository.findOne(orderId);
+        if(orderMaster == null){
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+
+        List<OrderDetail> orderDetaillist = orderDetailRepository.findByOrderId(orderId);
+        if(orderDetaillist ==null){
+            throw new SellException(ResultEnum.ORDERDETAIL_NOT_EXIST);
+        }
+
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(orderMaster,orderDTO);
+        orderDTO.setOrderDetailList(orderDetaillist);
+        return orderDTO;
     }
 
     @Override
     public Page<OrderDTO> findList(String buyerOpenid, Pageable pageable) {
-        return null;
+        Page<OrderMaster> resultPage =orderMasterRepository.findByBuyerOpenid(buyerOpenid,pageable);
+        List<OrderDTO> DTOlistResult = ConvertOrderMasterToOrderDTO.listConvert(resultPage.getContent());
+
+        return new PageImpl<OrderDTO>(DTOlistResult,pageable,resultPage.getTotalElements());
     }
 
     @Override

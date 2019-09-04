@@ -12,7 +12,7 @@ public interface OrderService {
     /** findone. */
     OrderDTO findOne(String orderId);
 
-    /** findorderList. */
+    /** findorderList by buyerOpenid. */
     Page<OrderDTO> findList(String buyerOpenid, Pageable pageable);
 
     /** cancel order. */
